@@ -4,7 +4,9 @@ Interactive approximation of continuous functions using Remes, Bernstein, and Fo
 ## Main.py
 The main file contains the interactive plot. You can modify abscissas, function, approximation methods, change the degree of approximation, look error wtih the function and see the difference between numerical computation and symbolic.
 
-[Image à mettre]
+<p align="center">
+  <img src="https://github.com/Sala2Code/Interactive-Function-Approximation/assets/109032171/1f258da3-0050-4871-8257-de2bcc9c6b10" alt="Remes jl">
+</p>
 
 To modify the new function, write in python. If you want $\sqrt{cos(x^2)}$ you have to write : np.cos(x*\*2)*\*(0.5).
 Maybe, a parser LaTeX will be there like a warning when you put an undefined function ($\frac{1}{x}$ on $[-1;1]$). The code continues to well works in despite of this lack.
