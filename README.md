@@ -9,6 +9,8 @@ The main file contains the interactive plot. You can modify abscissas, function,
 To modify the new function, write in python. If you want $\sqrt{cos(x^2)}$ you have to write : np.cos(x*\*2)*\*(0.5).
 Maybe, a parser LaTeX will be there like an warning when you put an undefined function ($\frac{1}{x}$ on $[-1;1]$). The code continues to well works in despite of this lack.
 
+We add Fourrier Method, but the result is not a polynomial ! So, when you update the slider, keep in mind, we change the number of iteration and to see an evolution (pass from n=2 to n=8 either make an approximation with "maximum" than cos( 2x) to cos(8x), changes almost nothing), we decide to each n multiply per 10 (either, cos(20x) to cos(80x) ). We add that to personal pleasure! No comments are written in the report.
+
 ## UniformApproximation.pdf
 Then, it's a scholar project. We made a more of 15 pages project titled "Approximation uniforme de fonctions continues : aspects analytique, algébrique et numérique" explaining how works approximation. The initial subject is about Bernstein Polynomials to then find out the reason why that's approximate and to finish on the Remes algorithm, to get the best polynomial approximation (and that's work very well, try on the code !)
 
