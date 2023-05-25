@@ -74,7 +74,7 @@ def bernsteinFunc():
     n = int(slider.get())
     res = np.zeros_like(t)
     for k in range(n+1):
-        res += f(k/n) * np.math.comb(n, k) * t**k * (1-t)**(n-k)
+        res += f( (k/n) * (interB - interA) + interA ) * np.math.comb(n, k) * ( (t-interA)/(interB-interA) )**k * (1- (t-interA)/(interB-interA) )**(n-k)
     return res
 
 
