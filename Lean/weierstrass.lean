@@ -10,9 +10,6 @@ import topology.metric_space.basic -- Distance
 -- import defs -- is_fbounded
 import main -- Bolzano-Weierstrass
 
--- PAS BEAU ET SALE, À RENDRE PLUS BEAU UN JOUR 
--- le plus important est que ça marche pour l'instant
-
 open_locale big_operators -- Notation ∑ 
 open finset
 open set
@@ -35,28 +32,14 @@ definition bernstein_poly (n : ℕ) (f : ℝ → ℝ) (x : ℝ) :=
   -- ∑ k in range n, bernstein_coeff k n f x
 
 -- LEMME 2.
-def f₁ (x : ℝ) : ℝ := 1
+-- def f₁ (x : ℝ) : ℝ := 1
 def f₂ (x : ℝ) : ℝ := x
 def f₃ (x : ℝ) : ℝ := x^2
 def f₄ (j : ℕ) (x : ℝ) : ℝ := (x - j)^2
 
-theorem sum_range_choose (n : ℕ) :
-  ∑ m in range (n + 1), nat.choose n m = 2 ^ n :=
-by simpa using (add_pow 1 1 n).symm
-
-
-/- theorem sum_range_choose2 (n : ℕ) (x : ℝ):
-  ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m = 1 :=
-begin
-  let t := ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m,
-  --let h := (add_pow x (1 - x) n).symm,
-  --calc h = 1 : rfl,
-  calc 
-    t = (add_pow x (1 - x) n) : sorry, 
-end -/
-
 -- OH PUTAIN ÇA MARCHE ! 
-@[simp] lemma B_1f_WORKING (n : ℕ) (x : ℝ) : ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m = 1 := 
+@[simp] lemma B_1f_WORKING (n : ℕ) (x : ℝ) : 
+  ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m = 1 := 
 begin 
   by simpa using (add_pow x (1 - x) n).symm,
 end
@@ -72,7 +55,9 @@ begin
   by simpa using (add_pow x (1 - x) n).symm,
 end
  -/
-@[simp] lemma B_2f (n : ℕ) (x : ℝ): bernstein_poly n f₂ x = x :=
+--@[simp] lemma B_2f (n : ℕ) (x : ℝ): bernstein_poly n f₂ x = x :=
+@[simp] lemma B_2f_WORKING (n : ℕ) (x : ℝ) : 
+  ∑ m in range (n + 1),  x^m * (1 - x)^(n - m) * m / n * nat.choose n m = 1 := 
 begin
   sorry,
 end
@@ -149,16 +134,19 @@ begin
   sorry,
 end
 
-theorem heine (I : set ℝ) (hcp : is_compact I) 
-              (f : I → ℝ) (hct : is_continuous f) : is_ucontinuous f :=
+--theorem heine (I : set ℝ) (hcp : is_compact I) 
+--              (f : I → ℝ) (hct : is_continuous f) : is_ucontinuous f :=
+theorem heine (I : set ℝ) (f : I → ℝ) : is_continuous f ∧ is_compact I → is_ucontinuous f :=
 begin
   sorry,
 end
 
 -- THÉORÈME DE WEIERSTRASS.
-theorem weierstrass (I : set ℝ) (hcp : is_compact I) 
-                    (f : I → ℝ) (hct : is_continuous f) 
-                    (Bnf : ℕ → (I → ℝ)) : u_convergence Bnf f :=
+--theorem weierstrass (I : set ℝ) (hcp : is_compact I) 
+--                    (f : I → ℝ) (hct : is_continuous f) 
+--                    (Bnf : ℕ → (I → ℝ)) : u_convergence Bnf f :=
+theorem weierstrass (I : set ℝ) (f : I → ℝ) (Bnf : ℕ → (I → ℝ)) :
+  is_continuous f ∧ is_compact I → u_convergence Bnf f := 
 begin 
   sorry,
 end
