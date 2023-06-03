@@ -1,12 +1,17 @@
 import data.real.basic
 import data.nat.choose.sum
+import data.nat.choose.basic
 import algebra.big_operators.basic
 import topology.subset_properties -- Compacité (fermés bornés de ℝ)
+import topology.uniform_space.compact 
 import topology.metric_space.basic -- Distance
 -- import order.liminf_limsup -- Supremum NOPE
 
 -- import defs -- is_fbounded
 import main -- Bolzano-Weierstrass
+
+-- PAS BEAU ET SALE, À RENDRE PLUS BEAU UN JOUR 
+-- le plus important est que ça marche pour l'instant
 
 open_locale big_operators -- Notation ∑ 
 open finset
@@ -26,7 +31,7 @@ definition bernstein_coeff (k : ℕ) (n : ℕ) (f : ℝ → ℝ) (x : ℝ) :=
   f ( k / n ) * coeff_binom n k * (x)^k * (1 - x)^(n - k)
 
 definition bernstein_poly (n : ℕ) (f : ℝ → ℝ) (x : ℝ) :=
-  (finset.range n).sum (λ (k : ℕ), bernstein_coeff k n f x)
+  (finset.range (n + 1)).sum (λ (k : ℕ), bernstein_coeff k n f x)
   -- ∑ k in range n, bernstein_coeff k n f x
 
 -- LEMME 2.
@@ -35,25 +40,49 @@ def f₂ (x : ℝ) : ℝ := x
 def f₃ (x : ℝ) : ℝ := x^2
 def f₄ (j : ℕ) (x : ℝ) : ℝ := (x - j)^2
 
-lemma B_1f (n : ℕ) (x : ℝ) : bernstein_poly n f₁ x = 1 :=
+theorem sum_range_choose (n : ℕ) :
+  ∑ m in range (n + 1), nat.choose n m = 2 ^ n :=
+by simpa using (add_pow 1 1 n).symm
+
+
+/- theorem sum_range_choose2 (n : ℕ) (x : ℝ):
+  ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m = 1 :=
+begin
+  let t := ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m,
+  --let h := (add_pow x (1 - x) n).symm,
+  --calc h = 1 : rfl,
+  calc 
+    t = (add_pow x (1 - x) n) : sorry, 
+end -/
+
+-- OH PUTAIN ÇA MARCHE ! 
+@[simp] lemma B_1f_WORKING (n : ℕ) (x : ℝ) : ∑ m in range (n + 1), x^m * (1 - x)^(n - m) * nat.choose n m = 1 := 
+begin 
+  by simpa using (add_pow x (1 - x) n).symm,
+end
+
+-- DONC ÇA ÇA VA AUX OUBLIETTES
+/- @[simp] lemma B_1f (n : ℕ) (x : ℝ) : bernstein_poly n f₁ x = 1 :=
+--lemma B_1f (n : ℕ) (x : ℝ) : 
+--  ∑ m in range (n), nat.choose n m * x^m * (1 - x)^(n - m)  = 1 :=
 begin
   --let res := add_pow 1 0 n,
   -- have h₁ : res = 1 := 
   --let ber := bernstein_poly n f₁ x,
-  sorry,
+  by simpa using (add_pow x (1 - x) n).symm,
 end
-
-lemma B_2f (n : ℕ) (x : ℝ): bernstein_poly n f₂ x = x :=
+ -/
+@[simp] lemma B_2f (n : ℕ) (x : ℝ): bernstein_poly n f₂ x = x :=
 begin
   sorry,
 end
 
-lemma B_3f (n : ℕ) (x : ℝ): bernstein_poly n f₃ x = ((n - 1) * x^2 + x) / n :=
+@[simp] lemma B_3f (n : ℕ) (x : ℝ): bernstein_poly n f₃ x = ((n - 1) * x^2 + x) / n :=
 begin
   sorry,
 end
 
-lemma sum_xkn (n : ℕ) (k : finset.range n) (x : ℝ) : bernstein_poly n (f₄ k / n) x = x * (1 - x) / n := -- putain de k
+@[simp] lemma sum_xkn (n : ℕ) (k : finset.range n) (x : ℝ) : bernstein_poly n (f₄ k / n) x = x * (1 - x) / n := -- putain de k
 begin
   sorry,
 end
@@ -120,15 +149,16 @@ begin
   sorry,
 end
 
-theorem heine (I : set ℝ) (f : I → ℝ) : 
-    is_continuous f ∧ is_compact I → is_ucontinuous f =
+theorem heine (I : set ℝ) (hcp : is_compact I) 
+              (f : I → ℝ) (hct : is_continuous f) : is_ucontinuous f :=
 begin
   sorry,
 end
 
 -- THÉORÈME DE WEIERSTRASS.
-theorem weierstrass (I : set ℝ) (f : I → ℝ) (Bnf : ℕ → (I → ℝ)) : 
-    is_continuous f ∧ is_compact I → u_convergence Bnf f :=
+theorem weierstrass (I : set ℝ) (hcp : is_compact I) 
+                    (f : I → ℝ) (hct : is_continuous f) 
+                    (Bnf : ℕ → (I → ℝ)) : u_convergence Bnf f :=
 begin 
   sorry,
 end
