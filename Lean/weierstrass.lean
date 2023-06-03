@@ -26,8 +26,8 @@ definition bernstein_coeff (k : ℕ) (n : ℕ) (f : ℝ → ℝ) (x : ℝ) :=
   f ( k / n ) * coeff_binom n k * (x)^k * (1 - x)^(n - k)
 
 definition bernstein_poly (n : ℕ) (f : ℝ → ℝ) (x : ℝ) :=
-  ∑ k in range n, bernstein_coeff k n f x
-
+  (finset.range n).sum (λ (k : ℕ), bernstein_coeff k n f x)
+  -- ∑ k in range n, bernstein_coeff k n f x
 
 -- LEMME 2.
 def f₁ (x : ℝ) : ℝ := 1
@@ -37,8 +37,9 @@ def f₄ (j : ℕ) (x : ℝ) : ℝ := (x - j)^2
 
 lemma B_1f (n : ℕ) (x : ℝ) : bernstein_poly n f₁ x = 1 :=
 begin
-  let res := add_pow 1 0 n,
---  have h₁ : res = 1 := 
+  --let res := add_pow 1 0 n,
+  -- have h₁ : res = 1 := 
+  --let ber := bernstein_poly n f₁ x,
   sorry,
 end
 
@@ -103,6 +104,10 @@ definition s_convergence {I : set ℝ} (fn : ℕ → (I → ℝ)) (f : I → ℝ
  -- ∃ (N : ℕ), basic_real_analysis.is_fbounded I (fn N - f)
 --  ∃ M, ∀ x, ∃ N, | fn N - f | ≤ M ∧ 
   -- MERDE
+definition u_convergence {I : set ℝ} (fn : ℕ → (I → ℝ)) (f : I → ℝ) :=
+  ∀ (ε : ℝ), ε > 0 →
+    ∃ (N : ℕ), ∀ n ≥ N, ∀ x, has_dist.dist (fn n x) (f x) ≤ ε 
+
 
 -- THÉORÈMES NÉCESSAIRES À LA DÉMONSTRATION DE WEIERSTRASS
 theorem extreme_value (I : set ℝ) (hcp : is_compact I)
@@ -115,16 +120,15 @@ begin
   sorry,
 end
 
-theorem heine (I : set ℝ) (hcp : is_compact I) 
-              (f : I → ℝ) (hct : is_continuous f) : is_ucontinuous f =
+theorem heine (I : set ℝ) (f : I → ℝ) : 
+    is_continuous f ∧ is_compact I → is_ucontinuous f =
 begin
-  sorry, 
+  sorry,
 end
 
 -- THÉORÈME DE WEIERSTRASS.
-theorem weierstrass (I : set ℝ) (hcp : is_compact I)  
-                    (f : I → ℝ) (hct : is_continuous f) 
-                    (Bnf : I → I) : :=
+theorem weierstrass (I : set ℝ) (f : I → ℝ) (Bnf : ℕ → (I → ℝ)) : 
+    is_continuous f ∧ is_compact I → u_convergence Bnf f :=
 begin 
   sorry,
 end
