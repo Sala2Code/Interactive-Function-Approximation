@@ -40,5 +40,5 @@ The historical example :
 </p>
 
 ## Lean
-And to conclude, we wirte some definitions and try to prove some basics theorems, propositions, lemmas with Lean about algebra and analysis.
+And to conclude, we write some definitions and try to prove some basics theorems, propositions, lemmas with Lean about algebra and analysis.
 See the Lean folder. 
